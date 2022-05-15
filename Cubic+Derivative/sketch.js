@@ -4,7 +4,7 @@ let totHeight = 800;
 let upTranslate = 30; 
 let rightTranslate = 30; 
 
-let totUnits = 20; 
+let totUnits = 30; 
 
 let timeSlider; 
 
@@ -13,9 +13,13 @@ let p1 = new Point(9.2, 4.3, "P1");
 let p2 = new Point(17, 12, "P2"); 
 let p3 = new Point(13.2, 18, "P3"); 
 
-let q0,q1,q2,r0,r1,s0; 
-
 let copyQ0, copyQ1, copyQ2,copyR0,copyR1,copyS0; 
+
+let derivativeS0, copyDS; 
+
+copyDS = new Point(); 
+
+
 
 let allPoints = [p0, p1, p2, p3]; 
 
@@ -59,6 +63,8 @@ function draw(){
     strokeWeight(1); 
     cubicBezier(); 
 
+    derivativeCubic(); 
+
     
 
     let t = timeSlider.value(); 
@@ -79,6 +85,12 @@ function draw(){
     copyS0.x = (1-t)*copyR0.x + t * copyR1.x; 
     copyS0.y = (1-t)*copyR0.y + t * copyR1.y; 
 
+    copyDS.x = p0.x * (-3*t*t + 6*t - 3) + p1.x * (3 - 12*t + 9*t*t) + p2.x * (6*t - 9*t*t) + 3*t*t+p3.x; 
+    copyDS.y = p0.y * (-3*t*t + 6*t - 3) + p1.y * (3 - 12*t + 9*t*t) + p2.y * (6*t - 9*t*t) + 3*t*t+p3.y;
+    copyDS.name = "DS"; 
+
+    copyDS.secondUpdateCoord(); 
+
 
     copyQ0.secondUpdateCoord(); 
     copyR0.secondUpdateCoord(); 
@@ -88,22 +100,45 @@ function draw(){
     copyS0.secondUpdateCoord(); 
 
     
-    copyQ0.show(); 
-    copyQ1.show();
-    copyQ2.show(); 
-    copyR0.show(); 
-    copyR1.show(); 
+    // copyQ0.show(); 
+    // copyQ1.show();
+    // copyQ2.show(); 
+    // copyR0.show(); 
+    // copyR1.show(); 
     copyS0.show(); 
 
 
-    strokeWeight(1); 
-    stroke(255); 
-    line(copyQ0.xLoc, copyQ0.yLoc, copyQ1.xLoc, copyQ1.yLoc); 
-    line(copyQ1.xLoc, copyQ1.yLoc, copyQ2.xLoc, copyQ2.yLoc); 
-    line(copyR0.xLoc, copyR0.yLoc, copyR1.xLoc, copyR1.yLoc); 
+    
+
+    copyDS.show(); 
+
+    // strokeWeight(1); 
+    // stroke(255); 
+    // line(copyQ0.xLoc, copyQ0.yLoc, copyQ1.xLoc, copyQ1.yLoc); 
+    // line(copyQ1.xLoc, copyQ1.yLoc, copyQ2.xLoc, copyQ2.yLoc); 
+    // line(copyR0.xLoc, copyR0.yLoc, copyR1.xLoc, copyR1.yLoc); 
 
 
     
+}
+
+
+function derivativeCubic(){
+
+    derivativeS0 = new Point(0,0,"DS"); 
+    for(let t = 0; t<=1; t+=0.001){
+
+        derivativeS0.x = p0.x * (-3*t*t + 6*t - 3) + p1.x * (3 - 12*t + 9*t*t) + p2.x * (6*t - 9*t*t) + 3*t*t+p3.x; 
+        derivativeS0.y = p0.y * (-3*t*t + 6*t - 3) + p1.y * (3 - 12*t + 9*t*t) + p2.y * (6*t - 9*t*t) + 3*t*t+p3.y;
+        
+       // console.log(derivativeS0.x, derivativeS0.y); 
+
+        stroke(56,255,248); 
+        strokeWeight(2); 
+        derivativeS0.secondUpdateCoord(); 
+        point(derivativeS0.xLoc, derivativeS0.yLoc); 
+
+    }
 }
 
 function cubicBezier(){
