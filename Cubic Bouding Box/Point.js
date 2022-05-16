@@ -12,9 +12,14 @@ function Point(x,y,name){
 
 
 
-Point.prototype.show = function(){
-    strokeWeight(10); 
-    stroke(255); 
+Point.prototype.show = function(color){
+    strokeWeight(10);
+    if(!color){ 
+    stroke(255);
+    } 
+    if(color){
+        stroke(color[0], color[1], color[2]); 
+    } 
     point(this.xLoc, this.yLoc);  
     noStroke(); 
     fill(255); 

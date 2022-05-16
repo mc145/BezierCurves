@@ -24,7 +24,7 @@ Point.prototype.show = function(){
 }
 
 Point.prototype.mouseOn = function(){
-    if(Math.abs(mouseX - this.xLoc) <= 20 && Math.abs(mouseY - this.yLoc) <= 20){
+    if(Math.abs(mouseX - this.xLoc) <= 30 && Math.abs(mouseY - this.yLoc) <= 30){
         return true; 
     }
 }

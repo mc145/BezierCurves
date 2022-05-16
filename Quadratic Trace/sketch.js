@@ -112,6 +112,7 @@ function mouseDragged(){
             allPoints[i].xLoc = mouseX; 
             allPoints[i].yLoc = mouseY; 
             allPoints[i].updateCoord(); 
+            return; 
         } 
         
     }
